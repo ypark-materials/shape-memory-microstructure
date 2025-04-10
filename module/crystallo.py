@@ -172,13 +172,14 @@ def minang(n, n_n, milvec):
     min_theta = theta[min_index]
 
     match min_index:
-        case 1:
+        case 0:
             min_n = n
-        case 2:
+        case 1:
             min_n = -n
-        case 3:
+        case 2:
             min_n = n_n
-        case 4:
+        case 3:
             min_n = -n_n
+            
 
     return min_theta, min_n
