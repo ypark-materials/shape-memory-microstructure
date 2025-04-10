@@ -46,4 +46,4 @@ n_frac = n_frac/np.linalg.norm(n_frac)
 Output
 '''
 print('COMPLETE: Minimum angle in degrees: ', theta)
-print('          Analytical normal''s miller index', -n_frac)
+print('          Analytical normal''s miller index', n_frac)
