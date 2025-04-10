@@ -8,15 +8,15 @@ from module import microstruct as ms
 Input
 '''
 # Unit cell parameters of the reference configuration
-abc_ref = np.array([7.6, 8.58, 17.23])
-angle_ref = np.array([78.22, 86.71, 72.1])
+abc_ref = np.array([6.1748, 9.9126, 19.6020])
+angle_ref = np.array([84.484, 86.208, 88.252])
 
 # Unit cell parameters of the deformed configuration
-abc_def = np.array([7.76, 7.74, 16.94])
-angle_def = np.array([77.80, 88.5, 82.2])
+abc_def = np.array([6.1899, 9.8715, 19.7418])
+angle_def = np.array([90, 96.946, 90])
 
 # Millar index from experiment
-milfrac = np.array([0,1,0])
+milfrac = np.array([0,0,1])
 
 '''
 Calculation
@@ -36,10 +36,14 @@ U, Q = mm.streten(F)
 n, a, s, nu, K, n_n, a_n, s_n, nu_n, K_n = ms.kincomp(F, np.eye(3))
 
 # Finds the minimum angle with the possible normal vector combination
-theta = cr.minang(n, n_n, milvec)
+theta, n_true = cr.minang(n, n_n, milvec)
+
+# Converts the analytical normal vector with the minimum angle to fractional coordinates
+n_frac = cr.cart2frac(n_true, reflat)
+n_frac = n_frac/np.linalg.norm(n_frac)
 
 '''
 Output
 '''
-print('COMPLETE: Minimum angle in degrees is')
-print(theta)
+print('COMPLETE: Minimum angle in degrees: ', theta)
+print('          Analytical normal''s miller index', -n_frac)
