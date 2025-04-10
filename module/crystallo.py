@@ -102,6 +102,10 @@ def cart2frac(milvec, latvec):
             miller indice with fractional coordinate (*, *, *)
     """
 
+    milfrac = np.linalg.solve(latvec, milvec)
+    
+    return milfrac
+
 def deltang(vec1, vec2):
     """
     Calculates the angle between two vectors
@@ -150,8 +154,10 @@ def minang(n, n_n, milvec):
             experimental vector normal to habit plane    
         
     Returns:
-        theta (float): 
+        min_theta (float): 
             minimum angle between the analytical and experimental normal vector
+        min_n (float): 
+            analytical normal vecor with the minimum angle 
     """
 
     # 4 possible theta values
@@ -161,6 +167,18 @@ def minang(n, n_n, milvec):
     theta4 = deltang(n_n, -milvec)
 
     # Finds the minimun of the 4 theta values
-    theta = np.min([theta1, theta2, theta3, theta4])
+    theta = [theta1, theta2, theta3, theta4]
+    min_index = np.argmin(theta)  # index of the smallest value
+    min_theta = theta[min_index]
 
-    return theta
+    match min_index:
+        case 1:
+            min_n = n
+        case 2:
+            min_n = -n
+        case 3:
+            min_n = n_n
+        case 4:
+            min_n = -n_n
+
+    return min_theta, min_n
